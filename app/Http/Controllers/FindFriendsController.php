@@ -2,18 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Request;
+use Illuminate\Support\Facades\Input;
 
 class FindFriendsController extends Controller
 {
+
+    public function index()
+    {
+        return view('index');
+    }
+    //fetch all county names
+
+    public function getCountryName()
+    {
+        $countryName = DB::table('lang_table')->pluck('country_name');
+        return view('ajaxfindfriends', compact('countryName'));
+    }
+
     // fetch all users that are not friend of user with id = 1
     // and are from Bulgaria
 
-    public function getData()
+    public function getData(Request $request)
     {
-
-        if (Request::has('findfriends')) {
+        if (Input::has('findfriends') || $_GET) {
 
             $data = DB::table('users')
                 ->join('lang_table', function ($join) {
@@ -26,9 +39,13 @@ class FindFriendsController extends Controller
                 ->where('users.country', '=', 1)
                 ->paginate(25);
 
+            if ($request->ajax()) {
+                return view('ajaxfindfriends', ['ffriends' => $data])->render();
+
+            }
             return view('findfriends', ['ffriends' => $data]);
-        } else {
-            return view('findfriends');
         }
+        return view('findfriends');
     }
+
 }

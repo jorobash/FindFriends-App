@@ -9,16 +9,12 @@
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
 |
-*/
+ */
 
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/ajax/ajaxfindfriends', 'FindFriendsController@getdata');
 
-// Route::get('/findfriends',function () {
-// 	return view('findfriends');
-// });
-
-Route::get('/findfriends','FindFriendsController@index');
-Route::get('/servisec','FindFriendsController@getAllFriends');
-Route::get('/getdata','FindFriendsController@getData');
+Route::get('/unfriends/fetchdata', 'FindFriendsController@getdata');
+Route::get('/getdata', 'FindFriendsController@getData');
