@@ -14,7 +14,8 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/getdcountryName', 'FindFriendsController@getCountryName');
 Route::get('/ajax/ajaxfindfriends', 'FindFriendsController@getdata');
 
-Route::get('/unfriends/fetchdata', 'FindFriendsController@getdata');
 Route::get('/getdata', 'FindFriendsController@getData');
